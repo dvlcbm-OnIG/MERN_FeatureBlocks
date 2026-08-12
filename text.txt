@@ -1,0 +1,117 @@
+
+### Backend
+From `package.json`:
+
+- npm install cors
+- npm install express
+- npm install mongoose
+- npm install nodemon
+
+These are the modules listed in the backend dependencies.
+### Frontend
+From `package.json`:
+
+- npm install axios
+- npm install react
+- npm install react-dom
+- npm install react-router-dom
+
+And the dev tools installed:
+
+- npm install -D @eslint/js
+- npm install -D @types/react
+- npm install -D @types/react-dom
+- npm install -D @vitejs/plugin-react
+- npm install -D eslint
+- npm install -D eslint-plugin-react-hooks
+- npm install -D eslint-plugin-react-refresh
+- npm install -D globals
+- npm install -D vite
+
+
+
+
+
+
+
+
+
+
+
+## Backend commands with short meaning
+
+- npm install cors  
+  Installs a package that allows the frontend to talk to the backend safely across different ports/origins.
+
+- npm install express  
+  Installs the Node.js framework used to build the backend server and API routes.
+
+- npm install mongoose  
+  Installs the MongoDB library used to connect the app to a database and manage data.
+
+- npm install nodemon  
+  Installs a tool that automatically restarts the server whenever code changes during development.
+
+---
+
+## Frontend commands with short meaning
+
+### Main dependencies
+- npm install axios  
+  Installs a library used to send HTTP requests from the React app to the backend.
+
+- npm install react  
+  Installs the core library for building the user interface.
+
+- npm install react-dom  
+  Installs the package that renders React components in the browser.
+
+- npm install react-router-dom  
+  Installs the library used for page navigation and routing between screens.
+
+### Dev dependencies
+- npm install -D @eslint/js  
+  Installs ESLint base rules for code quality checking.
+
+- npm install -D @types/react  
+  Installs TypeScript type definitions for React.
+
+- npm install -D @types/react-dom  
+  Installs TypeScript type definitions for React DOM.
+
+- npm install -D @vitejs/plugin-react  
+  Installs the React plugin that helps Vite work with React files.
+
+- npm install -D eslint  
+  Installs a tool that checks code for mistakes and style issues.
+
+- npm install -D eslint-plugin-react-hooks  
+  Installs rules to enforce correct React hook usage.
+
+- npm install -D eslint-plugin-react-refresh  
+  Installs support for React fast-refresh in Vite.
+
+- npm install -D globals  
+  Installs global variable definitions used by ESLint.
+
+- npm install -D vite  
+  Installs the frontend build tool and local dev server.
+
+
+
+
+Backend:
+- cors = allows frontend/backend communication
+- express = creates backend server
+- mongoose = connects MongoDB
+- nodemon = auto-restarts server
+
+Frontend:
+- axios = sends API 
+
+- react = builds UI
+- react-dom = renders UI
+- react-router-dom = handles page navigation
+- vite = runs/builds frontend
+- eslint = checks code errors
+- react plugin = helps Vite with React
