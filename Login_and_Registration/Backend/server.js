@@ -1,11 +1,11 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
-
 const EmployeeModel = require('./models/Employee')
 
+//create server
 const app = express()
-
+//middleware
 app.use(express.json())
 app.use(cors())
 
@@ -24,7 +24,9 @@ async function start() {
 }
 start()
 
+//acquire login credentials
 app.post('/login', async (req, res)=>{
+
     try{
         const {name, email, password} = req.body
         const user = await EmployeeModel.findOne({email: email})
@@ -40,13 +42,17 @@ app.post('/login', async (req, res)=>{
     }catch(err){
         res.status(500).json({ error: err.message })
     }
-})
 
+});
+
+//acquire resgister credentials
 app.post('/register', async (req, res)=>{
+
     try{
         const employee = await EmployeeModel.create(req.body)
         res.json(employee)
     }catch(err){
         res.status(500).json({ error: err.message })
     }
-})
+
+});
