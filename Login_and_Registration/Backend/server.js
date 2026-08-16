@@ -9,11 +9,11 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-const mongoUri = 'mongodb://127.0.0.1:27017/employee'
-
+const mongoUriLocal = 'mongodb://127.0.0.1:27017/employee'
+//const mongoUriAtlas = 'mongodb+srv://russeljeoff2_db_user:atlas@cluster0.smbhaau.mongodb.net/employee'
 async function start() {
     try{
-        await mongoose.connect(mongoUri)
+        await mongoose.connect(mongoUriLocal)
         console.log('connected to database')
         app.listen(3001, ()=>{
             console.log('server is running')
