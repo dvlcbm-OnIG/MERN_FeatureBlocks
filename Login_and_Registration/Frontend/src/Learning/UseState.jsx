@@ -24,21 +24,23 @@ export default function UseState(){
 
     let [display, setDis] = useState(0);
     let [alarm, setAlarm] = useState();
+    let [clr, setColor] = useState(false)
     function less(){
         if(display >0 ){
             setDis(display - 1)
         }else{
             setAlarm("cannot have a value less than 0");
+            setColor(true)
             setTimeout(()=>{
                 setAlarm('')
-            },1000)
+                setColor(false)
+            },700)
         }
     }
     function more(){
         setDis(display + 1)
     }
 
-    const [active, setActive] = useState(true);
 
     return(
 
@@ -50,15 +52,13 @@ export default function UseState(){
             <br />
 
             <button onClick={less}><b>-</b></button> 
-            <h3 >{display}</h3>
+            <h3 style={{color: clr? "red" : 'black'}}>{display}</h3>
             <button onClick={more}><b>+</b></button>
             <p>{alarm}</p>
 
             
 
-            <div >
-                {active ? "active" : "offline"}
-            </div>
+            
             
         </>
 
