@@ -8,12 +8,20 @@ function Login(){
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
     const navigate = useNavigate()
+    const [feeback, setF ] = useState()
 
     const handleSubmit = async (e)=>{
         e.preventDefault()
         try{
             const result = await axios.post('http://localhost:3001/login', { email, password})
-            console.log(result)
+
+            //shows feeback for invalidation
+            setF(result.data)
+            setTimeout(()=>{
+                setF(' ')
+            },700)
+            
+            
             if(result.data === "Success"){
                 navigate('/home')
             }
@@ -42,6 +50,8 @@ function Login(){
                     onChange={(e) => setPassword(e.target.value)} />
 
                     <button type='submit'>Login</button>
+                    {/* feedback error */}
+                    <p style={{color: 'red', fontSize: "10px"}}>{feeback}</p>
                 </form>
 
                 <p className='auth-switch'>
