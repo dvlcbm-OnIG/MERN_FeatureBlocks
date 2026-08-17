@@ -1,0 +1,33 @@
+#Comparisson Operators
+
+    $eq   - ==            {salary: { $eq: 30000 }}
+    $ne   - !=            {salary: { $ne: 30000 }}
+    $gt   - >             {salary: { $gt: 30000 }}
+    $gt   - >             {salary: { $gt: 30000 }}
+    $gte  - >=            {salary: { $gte: 30000 }}
+    $lt   - <             {salary; { $lt: 30000 }}
+    $lte  - <=            {salary; { $lte: 30000 }}
+
+#Array/Multiple-Value Operators
+
+    $in  - matches any value in a List                  {deparment: { $in: ['IT', 'HR'] }}
+    $nin - does not match values in the List            {department: { $nin: ['IT', 'HR'] }}
+
+
+#Logical Operators
+
+    $and  - &&                  { $and: [ {department: 'IT'}, {salary: {$gt: 30000 }} ] } 
+    $or   - ||                  { $or: [ {department: 'HR'}, {salary: {$lt: 30000}} ] }
+    $nor  - !(a && b)           { $nor: [ {deparment: 'HR'}, {salary: {$gt: 30000}} ] }
+    $not  - !                   { salary: { $not: {$gt: 30000} } }
+
+
+#Element Operators
+
+    $exist  - checks whether a field exists                 { age: {$exists: true} }
+    $type   - checks the BSON/data type of a field          { salary: {$type: 'number'} }
+
+
+#Evaluation Operators   
+
+    $regex  - Searches string using a pattern               { name: {$regex: 'A'} }
