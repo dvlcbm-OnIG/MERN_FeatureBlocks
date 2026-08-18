@@ -38,7 +38,7 @@ function activity(app, EmployeeModel){
 
 
         //output
-        res.json(getLt35k)
+        res.json(noFilter)
     })
 
 }
