@@ -6,6 +6,8 @@ const activity = require('./activityLesson')
 
 const quiz1 = require('./quiz1')
 const quiz2 = require('./quiz2')
+const quiz3 = require('./quiz3')
+
 const app = express()
 app.use(express.json())
 
@@ -28,6 +30,7 @@ server()
 
 // ===== routes =====
 
-//activity(app, EmployeeModel)
+activity(app, EmployeeModel) //POST
 //quiz1(app, EmployeeModel)   //Quiz 1 — MongoDB Query Operators
-quiz2(app, EmployeeModel)   //Quiz 2 — MongoDB Query Operators: Advanced Filtering
+//quiz2(app, EmployeeModel)   //Quiz 2 — MongoDB Query Operators: Advanced Filtering
+quiz3(app, EmployeeModel)     //Quiz 3 — Advanced MongoDB Operators

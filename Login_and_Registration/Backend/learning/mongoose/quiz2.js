@@ -75,6 +75,8 @@ function quiz2(app, Emp){
 
         //result output
         res.json(item10)
+
+        
     })
 }
 
