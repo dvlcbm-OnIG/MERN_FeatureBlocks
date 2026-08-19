@@ -1,3 +1,5 @@
+//delete later
+
 async function getUsers() {
   const response = await fetch("http://localhost:3000/users");
 
