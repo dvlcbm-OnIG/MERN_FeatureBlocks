@@ -5,16 +5,20 @@ const fs = require('fs')
 
 app.use(express.json())
 
-app.post('/users1', (req, res) => {
+let users = []
+app.post('/users2', (req, res) => {
+    users.push(req.body)
     res.json(req.body)
-    console.log(req.body)
 })
 
 //render html
+app.get('/users2', (req, res) => {
+    
+    res.json(users)
+})
 app.get('/users1', (req, res) => {
-    //res.sendFile(path.join(__dirname, 'fetch.html'))
-    //res.json(req.body)
-
+    
+    res.sendFile(path.join(__dirname, 'fetch.html'))
 })
 
 app.use((req, res) => {
