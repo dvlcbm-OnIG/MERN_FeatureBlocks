@@ -1,8 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 
-const EmployeeModel = require('./employee')
-const activity = require('./activityLesson')
+const EmployeeModel = require('../employee')
+const activity = require('../activityLesson')
 
 const quiz1 = require('./quiz1')
 const quiz2 = require('./quiz2')
