@@ -65,22 +65,6 @@ function quiz3(app, emp){
         //res.json(item1)
     })
 
-//delete later
-    let users = [];
-
-app.post("/users", (req, res) => {
-  users.push(req.body);
-
-  res.json({
-    message: "User added",
-    user: req.body
-  });
-});
-
-app.get("/users", (req, res) => {
-  res.json(users);
-});
-
 
 }
 

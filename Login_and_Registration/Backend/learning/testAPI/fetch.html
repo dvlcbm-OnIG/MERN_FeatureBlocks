@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p id="result"></p>
+
+
+    <script>
+        const result = document.getElementById('result')
+        async function API() {
+            try {
+                const response = await fetch('http://localhost:3000/users1')
+                if (!response.ok) {
+                    throw new Error(`HTTP error: ${response.status}`)
+                }
+                const data = await response.text()
+
+               // result.textContent = JSON.stringify(data)
+               console.log(data)
+            } catch (error) {
+                result.textContent = `Fetch failed: ${error.message}`
+                console.error(error)
+            }
+        }
+        API()
+    </script>
+</body>
+
+</html>
