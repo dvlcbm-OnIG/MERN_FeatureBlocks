@@ -6,7 +6,8 @@ const EmployeeSchema = new mongoose.Schema({
     password: String,
     age: Number,
     department: String,
-    salary: Number
+    salary: Number,
+    startTime: String
 })
 
 const EmployeeModel = mongoose.model('example1', EmployeeSchema) //this creates a collection called "example1"
