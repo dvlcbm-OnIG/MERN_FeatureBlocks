@@ -32,9 +32,9 @@ server()
 
 // ===== routes =====
 
-//activity(app, EmployeeModel) //POST
+activity(app, EmployeeModel) //POST
 //quiz1(app, EmployeeModel)   //Quiz 1 — MongoDB Query Operators
 //quiz2(app, EmployeeModel)   //Quiz 2 — MongoDB Query Operators: Advanced Filtering
 //quiz3(app, EmployeeModel)     //Quiz 3 — Advanced MongoDB Operators
 //quiz4(app, EmployeeModel)  //Quiz4  - Mongoose Query Methods
-quiz5(app, EmployeeModel)
+//quiz5(app, EmployeeModel)

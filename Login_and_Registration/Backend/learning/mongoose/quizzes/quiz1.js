@@ -3,6 +3,7 @@ function quiz1(app, EmployeeModel){
 
     app.get('/example1', async (req, res)=>{
 
+        const all = await EmployeeModel.find()
         const item1 = await EmployeeModel.find({
             salary: { $eq: 30000 } //salary exactly 30,000
         })
@@ -52,7 +53,7 @@ function quiz1(app, EmployeeModel){
         })
 
         //show result on API
-        res.json(item10)
+        res.json(all)
     })
 }
 

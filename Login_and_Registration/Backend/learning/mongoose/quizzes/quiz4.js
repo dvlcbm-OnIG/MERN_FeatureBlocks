@@ -1,4 +1,5 @@
 //Mongoose Query Methods
+
 function quiz4(app, emp){
 
     app.get('/example1', async (req, res)=>{
