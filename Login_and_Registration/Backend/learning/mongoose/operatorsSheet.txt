@@ -31,3 +31,15 @@
 #Evaluation Operators   
 
     $regex  - Searches string using a pattern               { name: {$regex: 'A'} }
+
+
+
+
+#Update Operators
+
+    $set       → change a value                         - { $set: { salary: 40000 } }
+    $inc       → increase/decrease a number             - { $inc: { salary: 5000 } } ,  { $inc: { salary: -5000 } }
+    $mul       → multiply a number                      - { $mul: { salary: 2 } }
+    $min       → change only if new value is smaller    - { $min: { salary: 25000 } }
+    $max       → change only if new value is larger     - { $max: { salary: 40000 } }
+    $unset     → remove a field                         - { $unset: { password: '' } }
