@@ -20,7 +20,8 @@ function quiz6(app, emp){
         //item3 (comment to prevent updating every request)
         // const item3 = await emp.findOneAndUpdate(
         //     {name: 'Bob'},
-        //     {$inc: {salary: 5000}}
+        //     {$inc: {salary: 5000}},
+        //     {new: true}
         // )
 
         //item4
