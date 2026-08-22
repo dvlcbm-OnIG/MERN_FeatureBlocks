@@ -5,9 +5,11 @@ function quiz6(app, emp){
 
     app.get('/example1', async (req, res)=>{
 
-        const findAll = await emp.find({
-        })
-        res.json(findAll)
+        const findAllNameOnly = await emp
+            .find() //find all then-
+            .select('name')  //select name only
+
+        res.json(findAllNameOnly)
     })
 
     app.post('/example1', async(req, res)=>{
