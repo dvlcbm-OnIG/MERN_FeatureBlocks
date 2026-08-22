@@ -62,3 +62,28 @@ select()
 
 HOW MANY MATCH
 countDocuments()
+
+
+
+
+#CREATE
+create()
+insertMany()
+save()
+
+#READ
+find()
+findOne()
+findById()
+
+#UPDATE
+updateOne()
+updateMany()
+findOneAndUpdate()
+findByIdAndUpdate()
+
+#DELETE
+deleteOne()
+deleteMany()
+findOneAndDelete()
+findByIdAndDelete()
