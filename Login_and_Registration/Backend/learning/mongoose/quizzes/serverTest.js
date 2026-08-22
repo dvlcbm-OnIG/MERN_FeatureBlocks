@@ -10,6 +10,7 @@ const quiz3 = require('./quiz3')
 const quiz4 = require('./quiz4')
 const quiz5 = require('./quiz5')
 const quiz6 = require('./quiz6')
+const quiz7 = require('./quiz7')
 
 const app = express()
 app.use(express.json())
@@ -40,3 +41,4 @@ server()
 //quiz4(app, EmployeeModel)  //Quiz4  - Mongoose Query Methods
 //quiz5(app, EmployeeModel)  //Quiz 5 Creating Documents  - create(), insertMany(), new Model(), .save()
 quiz6(app, EmployeeModel)    //Quiz 6 — Updating Documents.  - updateOne(),updateMany(), findOneAndUpdate(), findByIdAndUpdate() 
+quiz7(app, EmployeeModel)
