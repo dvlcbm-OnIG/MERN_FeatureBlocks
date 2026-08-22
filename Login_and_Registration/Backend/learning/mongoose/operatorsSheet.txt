@@ -43,3 +43,22 @@
     $min       → change only if new value is smaller    - { $min: { salary: 25000 } }
     $max       → change only if new value is larger     - { $max: { salary: 40000 } }
     $unset     → remove a field                         - { $unset: { password: '' } }
+
+    quiz4:
+    FILTER
+find()
+findOne()
+findById()
+
+ORDER
+sort()
+
+HOW MANY
+limit()
+skip()
+
+WHICH FIELDS
+select()
+
+HOW MANY MATCH
+countDocuments()
