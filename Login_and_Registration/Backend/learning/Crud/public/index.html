@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD Practice</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@600;700;800&display=swap');
+
+        :root {
+            --ink: #eaf7f5;
+            --muted: #88aaa9;
+            --panel: rgba(10, 27, 31, 0.82);
+            --line: rgba(123, 231, 214, 0.2);
+            --cyan: #55f5dd;
+            --lime: #d5ff62;
+            --coral: #ff7d78;
+            color: var(--ink);
+            background: #061216;
+            font-family: 'Space Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            align-content: start;
+            gap: 14px 22px;
+            width: min(1120px, calc(100% - 48px));
+            height: 100vh;
+            min-height: 0;
+            margin: 0 auto;
+            padding: 30px 0;
+            background:
+                linear-gradient(rgba(85, 245, 221, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(85, 245, 221, 0.035) 1px, transparent 1px),
+                radial-gradient(circle at 50% -10%, rgba(39, 130, 127, 0.28), transparent 40%),
+                #061216;
+            background-size: 34px 34px, 34px 34px, auto, auto;
+        }
+
+        body::before,
+        body::after {
+            position: fixed;
+            z-index: -1;
+            width: 1px;
+            height: 100vh;
+            background: linear-gradient(transparent, var(--cyan), transparent);
+            content: '';
+            opacity: 0.22;
+        }
+
+        body::before {
+            left: 8%;
+        }
+
+        body::after {
+            right: 8%;
+        }
+
+        h1,
+        h2 {
+            font-family: 'Syne', sans-serif;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            grid-column: 1 / -1;
+            margin: 0;
+            color: var(--cyan);
+            font-size: clamp(2rem, 5vw, 4.2rem);
+            line-height: 0.95;
+            text-shadow: 0 0 28px rgba(85, 245, 221, 0.32);
+        }
+
+        h1::before {
+            display: block;
+            margin-bottom: 16px;
+            color: var(--muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.28em;
+            content: '// CONTROL PANEL / ACTIVE';
+        }
+
+        section {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-column: span 1;
+            align-content: space-between;
+            min-height: 170px;
+            gap: 0;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--panel);
+            overflow: hidden;
+        }
+
+        h2 {
+            grid-column: 1 / -1;
+            margin: 0;
+            padding: 12px 18px 10px;
+            border-bottom: 1px solid var(--line);
+            color: var(--lime);
+            font-size: 1rem;
+        }
+
+        section input {
+            width: 100%;
+            margin: 0;
+            border-right: 1px solid var(--line);
+            background: transparent;
+        }
+
+        section input:last-of-type {
+            border-right: 0;
+        }
+
+        input {
+            min-width: 0;
+            height: 42px;
+            padding: 0 18px;
+            border: 0;
+            outline: 0;
+            color: var(--ink);
+            font: inherit;
+            transition: background 160ms ease, box-shadow 160ms ease;
+        }
+
+        input::placeholder {
+            color: var(--muted);
+        }
+
+        input:focus {
+            background: rgba(85, 245, 221, 0.08);
+            box-shadow: inset 3px 0 var(--cyan);
+        }
+
+        button {
+            min-height: 42px;
+            padding: 0 18px;
+            border: 1px solid var(--cyan);
+            border-radius: 7px;
+            color: #061216;
+            background: var(--cyan);
+            font: inherit;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+        }
+
+        button:hover,
+        button:focus-visible {
+            color: var(--cyan);
+            background: transparent;
+            box-shadow: 0 0 20px rgba(85, 245, 221, 0.24);
+            outline: 0;
+        }
+
+        body>button {
+            grid-column: 1 / -1;
+            justify-self: start;
+            min-width: 176px;
+            margin-top: -18px;
+            border-radius: 7px;
+            color: var(--cyan);
+            background: transparent;
+        }
+
+        body>button:hover,
+        body>button:focus-visible {
+            color: #061216;
+            background: var(--cyan);
+        }
+
+        section button {
+            grid-column: 1 / -1;
+            border: 0;
+            border-top: 1px solid var(--cyan);
+            border-radius: 0;
+        }
+
+        #output {
+            grid-column: 1 / -1;
+            height: clamp(396px, 15vh, 150px);
+            min-height: 0;
+            margin: 0;
+            padding: 16px 20px;
+            overflow: auto;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            color: var(--cyan);
+            background: rgba(3, 13, 16, 0.9);
+            box-shadow: inset 0 0 28px rgba(0, 0, 0, 0.32);
+            font-size: 0.82rem;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        @media (max-width: 700px) {
+
+            html,
+            body {
+                height: auto;
+                min-height: 100%;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+            body {
+                grid-template-columns: 1fr;
+                height: auto;
+                min-height: 100vh;
+                width: min(100% - 24px, 520px);
+                gap: 10px;
+                padding: 16px 0;
+            }
+
+            h1 {
+                font-size: clamp(1.7rem, 9vw, 2.5rem);
+                line-height: 1;
+            }
+
+            h1::before {
+                margin-bottom: 6px;
+                font-size: 0.5rem;
+                letter-spacing: 0.16em;
+            }
+
+            body>button {
+                justify-self: stretch;
+                width: 100%;
+                min-width: 0;
+                margin-top: 0;
+                font-size: 0.78rem;
+            }
+
+            section {
+                grid-template-columns: 1fr;
+                width: 100%;
+                min-height: 0;
+                align-content: normal;
+            }
+
+            section input,
+            section button {
+                grid-column: 1;
+                border-right: 0;
+                border-bottom: 1px solid var(--line);
+            }
+
+            section button {
+                border-bottom: 0;
+            }
+
+            body>button,
+            #output {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>User CRUD</h1>
+
+    <button onclick="getUsers()">GET Users</button>
+
+    <section>
+        <h2>Get One User</h2>
+
+        <input id="getUserId" type="number" placeholder="User ID">
+
+        <button onclick="getUser()">GET User</button>
+    </section>
+
+    <section>
+        <h2>Create User</h2>
+
+        <input id="name" placeholder="Name">
+        <input id="age" type="number" placeholder="Age">
+
+        <button onclick="createUser()">POST User</button>
+    </section>
+
+    <section>
+        <h2>Update User</h2>
+
+        <input id="updateId" type="number" placeholder="User ID">
+        <input id="updateName" placeholder="New name">
+        <input id="updateAge" type="number" placeholder="New age">
+
+        <button onclick="updateUser()">PUT User</button>
+    </section>
+
+    <section>
+        <h2>Delete User</h2>
+
+        <input id="deleteId" type="number" placeholder="User ID">
+
+        <button onclick="deleteUser()">DELETE User</button>
+    </section>
+
+    <pre id="output"></pre>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        async function getUsers() {
+            const response = await axios.get("/api/users");
+
+            document.getElementById("output").textContent =
+                JSON.stringify(response.data, null, 2);
+        }
+
+        async function getUser() {
+            const id = document.getElementById("getUserId").value;
+
+            const response = await axios.get(`/api/users/${id}`);
+
+            document.getElementById("output").textContent =
+                JSON.stringify(response.data, null, 2);
+        }
+
+        async function createUser() {
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
+
+            const response = await axios.post("/api/users", {
+                name,
+                age: Number(age)
+            });
+
+            document.getElementById("output").textContent =
+                JSON.stringify(response.data, null, 2);
+        }
+
+        async function updateUser() {
+            const id = document.getElementById("updateId").value;
+            const name = document.getElementById("updateName").value;
+            const age = document.getElementById("updateAge").value;
+
+            const response = await axios.put(`/api/users/${id}`, {
+                name,
+                age: Number(age)
+            });
+
+            document.getElementById("output").textContent =
+                JSON.stringify(response.data, null, 2);
+        }
+
+        async function deleteUser() {
+            const id = document.getElementById("deleteId").value;
+
+            const response = await axios.delete(`/api/users/${id}`);
+
+            document.getElementById("output").textContent =
+                JSON.stringify(response.data, null, 2);
+        }
+    </script>
+
+</body>
+
+</html>

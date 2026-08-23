@@ -1,45 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-
 <body>
-    <p id="result"></p>
-
+    <button id='btn'>Fetch</button>
+    <a href="/">Go back Home</a>
+    <div id="result"></div>
 
     <script>
+        const btn = document.getElementById('btn')
         const result = document.getElementById('result')
-        async function API() {
-            try {
-                const response = await fetch('http://localhost:3000/users2')
+        
+        let attempt = 0;
+        btn.addEventListener('click', async()=>{
+            
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error: ${response.status}`)
+            try{
+                const response = await fetch('http://localhost:3000/loginApi')
+
+                if(!response.ok){
+                    throw new Error('failed to fetch the data')
+                }
+                const data = await response.json()
+                attempt+=1
+                
+                if(attempt === 1){
+                    data.forEach(res =>{
+                    result.innerHTML += 
+                    `
+                    name: <b>${res.name}</b> <br>
+                    password: <b>${res.password}</b> <br><br>
+                    `
+                })
                 }
 
-                const data = await response.json()
 
-                
-                data.forEach(res =>{
-                    result.innerHTML += `
-                    Name: <b>${res.name}</b>  <br>
-                    Age: <b>${res.age}</b>   <br>
-                    Department: <b>${res.department}</b> <br><br>`
-                })
-
-                console.log(data)
-
-            } catch (error) {
-                result.textContent = `Fetch failed: ${error.message}`
-                console.error(error)
+                console.log('fetched successfully')
+            }catch(err){
+                console.log(err.message)
             }
-        }
-        API()
+        })
+
     </script>
 </body>
-
 </html>

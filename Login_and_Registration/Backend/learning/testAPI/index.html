@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    <style>
+        :root {
+            color-scheme: light;
+            font-family: "Segoe UI", sans-serif;
+            background: #f3f5f7;
+            color: #18212b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            display: grid;
+            min-height: 100vh;
+            margin: 0;
+            place-items: center;
+            padding: 24px;
+            background: linear-gradient(135deg, #eef2f5, #f8fafb);
+        }
+
+        main {
+            width: min(100%, 420px);
+            padding: 40px;
+            border: 1px solid #e0e5e9;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 18px 45px rgb(24 33 43 / 8%);
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: 1.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .intro {
+            margin: 0 0 32px;
+            color: #64717d;
+            font-size: 0.95rem;
+        }
+
+        form {
+            display: grid;
+            gap: 22px;
+        }
+
+        .field {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            height: 56px;
+            padding: 18px 16px 6px;
+            border: 1px solid #cbd3da;
+            border-radius: 7px;
+            outline: none;
+            color: #18212b;
+            background: #ffffff;
+            font: inherit;
+            transition: border-color 160ms ease, box-shadow 160ms ease;
+        }
+
+        input::placeholder {
+            color: transparent;
+        }
+
+        label {
+            position: absolute;
+            top: 17px;
+            left: 16px;
+            color: #687682;
+            pointer-events: none;
+            transform-origin: left top;
+            transition: color 160ms ease, transform 160ms ease;
+        }
+
+        input:focus,
+        input:not(:placeholder-shown) {
+            border-color: #2563eb;
+        }
+
+        input:focus {
+            box-shadow: 0 0 0 3px rgb(37 99 235 / 14%);
+        }
+
+        input:focus+label,
+        input:not(:placeholder-shown)+label {
+            top: 9px;
+            color: #2563eb;
+            transform: scale(0.72);
+        }
+
+        button {
+            min-height: 50px;
+            margin-top: 2px;
+            border: 0;
+            border-radius: 7px;
+            color: #ffffff;
+            background: #1d4ed8;
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 160ms ease, transform 160ms ease;
+        }
+
+        button:hover {
+            background: #1e40af;
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        button:focus-visible {
+            outline: 3px solid rgb(37 99 235 / 35%);
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Welcome back</h1>
+        <p class="intro">Sign in to continue to your account.</p>
+
+        <form >
+            <div class="field">
+                <input id="username" name="username" type="text" placeholder="Username" autocomplete="username"
+                    required>
+                <label for="username">Username</label>
+            </div>
+
+            <div class="field">
+                <input id="password" name="password" type="password" placeholder="Password"
+                    autocomplete="current-password" required>
+                <label for="password">Password</label>
+            </div>
+
+            <button type="submit">Sign in</button>
+        </form>
+        <a href="/fetch">See data</a>
+    </main>
+
+    <script>
+        const username = document.getElementById('username')
+        const password = document.getElementById('password')
+        const form = document.querySelector('form')
+
+        form.addEventListener("submit", async (e)=>{
+
+            e.preventDefault();
+
+            const name = username.value
+            const pass = password.value
+
+            try{
+                const response = await fetch('/loginApi', {
+                    method: 'POST',
+                    headers:{
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        password: pass
+                    })
+                })
+
+                if(!response.ok){
+                    throw new Error('request failed!')
+                }
+
+                const data = await response.json()
+                console.log('successfully submitted!')
+                console.log(data)
+                
+            }catch(err){
+                console.error(err.message)
+            }
+
+
+        })
+    </script>
+</body>
+
+</html>

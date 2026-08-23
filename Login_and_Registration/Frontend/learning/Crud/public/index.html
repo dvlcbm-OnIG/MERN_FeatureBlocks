@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD Practice</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@600;700;800&display=swap');
+
+        :root {
+            --ink: #eaf7f5;
+            --muted: #88aaa9;
+            --panel: rgba(10, 27, 31, 0.82);
+            --line: rgba(123, 231, 214, 0.2);
+            --cyan: #55f5dd;
+            --lime: #d5ff62;
+            --coral: #ff7d78;
+            color: var(--ink);
+            background: #061216;
+            font-family: 'Space Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 28px 22px;
+            width: min(1120px, calc(100% - 48px));
+            min-height: 100vh;
+            margin: 0 auto;
+            padding: 88px 0 72px;
+            background:
+                linear-gradient(rgba(85, 245, 221, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(85, 245, 221, 0.035) 1px, transparent 1px),
+                radial-gradient(circle at 50% -10%, rgba(39, 130, 127, 0.28), transparent 40%),
+                #061216;
+            background-size: 34px 34px, 34px 34px, auto, auto;
+        }
+
+        body::before,
+        body::after {
+            position: fixed;
+            z-index: -1;
+            width: 1px;
+            height: 100vh;
+            background: linear-gradient(transparent, var(--cyan), transparent);
+            content: '';
+            opacity: 0.22;
+        }
+
+        body::before {
+            left: 8%;
+        }
+
+        body::after {
+            right: 8%;
+        }
+
+        h1,
+        h2 {
+            font-family: 'Syne', sans-serif;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            grid-column: 1 / -1;
+            margin: 0 0 10px;
+            color: var(--cyan);
+            font-size: clamp(2.2rem, 6vw, 5.2rem);
+            line-height: 0.95;
+            text-shadow: 0 0 28px rgba(85, 245, 221, 0.32);
+        }
+
+        h1::before {
+            display: block;
+            margin-bottom: 16px;
+            color: var(--muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.28em;
+            content: '// CONTROL PANEL / ACTIVE';
+        }
+
+        h2 {
+            grid-column: span 1;
+            margin: 0;
+            padding: 20px 22px 0;
+            border: 1px solid var(--line);
+            border-bottom: 0;
+            border-radius: 12px 12px 0 0;
+            background: var(--panel);
+            color: var(--lime);
+            font-size: 1rem;
+        }
+
+        h2+input,
+        h2+input+input,
+        h2+input+input+button,
+        h2+input+input+input,
+        h2+input+input+input+button {
+            grid-column: span 1;
+            width: 100%;
+            margin: 0;
+            border-left: 1px solid var(--line);
+            border-right: 1px solid var(--line);
+            background: var(--panel);
+        }
+
+        h2+input {
+            padding-top: 18px;
+        }
+
+        input {
+            min-width: 0;
+            height: 52px;
+            padding: 0 22px;
+            border: 0;
+            outline: 0;
+            color: var(--ink);
+            font: inherit;
+            transition: background 160ms ease, box-shadow 160ms ease;
+        }
+
+        input::placeholder {
+            color: var(--muted);
+        }
+
+        input:focus {
+            background: rgba(85, 245, 221, 0.08);
+            box-shadow: inset 3px 0 var(--cyan);
+        }
+
+        button {
+            min-height: 52px;
+            padding: 0 22px;
+            border: 1px solid var(--cyan);
+            border-radius: 0 0 12px 12px;
+            color: #061216;
+            background: var(--cyan);
+            font: inherit;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+        }
+
+        button:hover,
+        button:focus-visible {
+            color: var(--cyan);
+            background: transparent;
+            box-shadow: 0 0 20px rgba(85, 245, 221, 0.24);
+            outline: 0;
+        }
+
+        body>button {
+            grid-column: 1 / -1;
+            justify-self: start;
+            min-width: 176px;
+            margin-top: -18px;
+            border-radius: 7px;
+            color: var(--cyan);
+            background: transparent;
+        }
+
+        body>button:hover,
+        body>button:focus-visible {
+            color: #061216;
+            background: var(--cyan);
+        }
+
+        #output {
+            grid-column: 1 / -1;
+            min-height: 180px;
+            margin: 4px 0 0;
+            padding: 24px;
+            overflow: auto;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            color: var(--cyan);
+            background: rgba(3, 13, 16, 0.9);
+            box-shadow: inset 0 0 28px rgba(0, 0, 0, 0.32);
+            font-size: 0.82rem;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                grid-template-columns: 1fr;
+                width: min(100% - 28px, 520px);
+                padding-top: 48px;
+            }
+
+            h2,
+            h2+input,
+            h2+input+input,
+            h2+input+input+button,
+            h2+input+input+input,
+            h2+input+input+input+button {
+                grid-column: 1;
+            }
+
+            body>button,
+            #output {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>User CRUD</h1>
+
+    <button onclick="getUsers()">GET Users</button>
+
+    <h2>Get One User</h2>
+
+    <input id="getUserId" type="number" placeholder="User ID">
+
+    <button onclick="getUser()">GET User</button>
+
+    <h2>Create User</h2>
+
+    <input id="name" placeholder="Name">
+    <input id="age" type="number" placeholder="Age">
+
+    <button onclick="createUser()">POST User</button>
+
+    <h2>Update User</h2>
+
+    <input id="updateId" type="number" placeholder="User ID">
+    <input id="updateName" placeholder="New name">
+    <input id="updateAge" type="number" placeholder="New age">
+
+    <button onclick="updateUser()">PUT User</button>
+
+    <h2>Delete User</h2>
+
+    <input id="deleteId" type="number" placeholder="User ID">
+
+    <button onclick="deleteUser()">DELETE User</button>
+
+    <pre id="output"></pre>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        async function getUsers() {
+            const response = await axios.get("/api/users");
+
+            document.getElementById("output").textContent =
+                JSON.stringify(response.data, null, 2);
+        }
+
+        async function getUser() {
+            const id = document.getElementById("getUserId").value;
+
+            const response = await axios.get(`/api/users/${id}`);
+
+            document.getElementById("output").textContent =
+                JSON.stringify(response.data, null, 2);
+        }
+
+        async function createUser() {
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
+
+            const response = await axios.post("/api/users", {
+                name,
+                age: Number(age)
+            });
+
+            document.getElementById("output").textContent =
+                JSON.stringify(response.data, null, 2);
+        }
+
+        async function updateUser() {
+            const id = document.getElementById("updateId").value;
+            const name = document.getElementById("updateName").value;
+            const age = document.getElementById("updateAge").value;
+
+            const response = await axios.put(`/api/users/${id}`, {
+                name,
+                age: Number(age)
+            });
+
+            document.getElementById("output").textContent =
+                JSON.stringify(response.data, null, 2);
+        }
+
+        async function deleteUser() {
+            const id = document.getElementById("deleteId").value;
+
+            const response = await axios.delete(`/api/users/${id}`);
+
+            document.getElementById("output").textContent =
+                JSON.stringify(response.data, null, 2);
+        }
+    </script>
+
+</body>
+
+</html>
