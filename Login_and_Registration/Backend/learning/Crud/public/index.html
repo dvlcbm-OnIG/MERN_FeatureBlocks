@@ -322,7 +322,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
-    
+
 
     <script>
         async function getUsers() {
@@ -356,13 +356,20 @@
 
         async function updateUser() {
             const id = document.getElementById("updateId").value;
-            const name = document.getElementById("updateName").value;
-            const age = document.getElementById("updateAge").value;
+            const name = document.getElementById("updateName").value.trim();
+            const age = document.getElementById("updateAge").value.trim();
 
-            const response = await axios.put(`/api/users/${id}`, {
-                name,
-                age: Number(age)
-            });
+            const updateData = {};
+
+            if (name !== "") {
+                updateData.name = name;
+            }
+
+            if (age !== "") {
+                updateData.age = Number(age);
+            }
+
+            const response = await axios.put(`/api/users/${id}`, updateData);
 
             document.getElementById("output").textContent =
                 JSON.stringify(response.data, null, 2);

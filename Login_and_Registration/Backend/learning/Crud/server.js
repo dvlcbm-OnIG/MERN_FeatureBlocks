@@ -88,7 +88,7 @@ app.delete("/api/users/:id", (req, res) => {
     return res.json({ message: "ID must be a number" });
   }
 
-  const exists = users.some(u => u.id === id);
+  const exists = users.some(u => u.id === id); // some returns either TRUE or FALSE
 
   if (!exists) {
     return res.json({ message: "User not found" });
