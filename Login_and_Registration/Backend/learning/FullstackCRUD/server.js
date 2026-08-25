@@ -38,26 +38,70 @@ dbConnect()
 //create users  (api endpoint)
 app.post('/collection1', async (req, res) => {
 
-    const { name, age, password } = req.body
+    const { name, age, password } = req.body;
 
+    // Validation
+    if (typeof name !== "string" || name.trim() === "") {
+        return res.status(400).json({
+            success: false,
+            message: "Name is required"
+        });
+    }
+
+    if (password === undefined) {
+    return res.status(400).json({
+        success: false,
+        message: "Password is required"
+    });
+}
+
+if (typeof password !== "string") {
+    return res.status(400).json({
+        success: false,
+        message: "Password must be a string"
+    });
+}
+
+if (password.trim() === "") {
+    return res.status(400).json({
+        success: false,
+        message: "Password is required"
+    });
+}
+
+    const newAge = Number(age);
+
+    if (!Number.isInteger(newAge) || newAge < 1 || newAge > 120) {
+        return res.status(400).json({
+            success: false,
+            message: "Age must be a whole number between 1 and 120"
+        });
+    }
+
+    // Everything passed validation
     try {
-        await empModel.create({
-            name: name,
-            password: password,
-            age: age
-        })
 
-        res.json({
+        const employee = await empModel.create({
+            name: name.trim(),
+            age: newAge,
+            password: password
+        });
+
+        res.status(201).json({
             success: true,
             message: "Successfully submitted"
-        })
-    } catch {
-        res.status(400).json({
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).json({
             success: false,
-            message: "We could not submit your details. Please check the form and try again."
-        })
+            message: "Internal server error"
+        });
     }
-})
+});
 
 
 
