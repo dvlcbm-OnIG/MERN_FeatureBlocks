@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Details</title>
+    <style>
+        :root {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #1c1e21;
+            background: #f0f2f5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            display: grid;
+            min-height: 100vh;
+            margin: 0;
+            place-items: center;
+            padding: 24px;
+        }
+
+        .form-card {
+            width: min(100%, 430px);
+            padding: 28px;
+            border: 1px solid #dddfe2;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            color: #1877f2;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .intro {
+            margin: 0 0 24px;
+            color: #606770;
+            text-align: center;
+        }
+
+        .form-error {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            margin-bottom: 18px;
+            padding: 12px 14px;
+            border: 1px solid #f5c2c7;
+            border-radius: 6px;
+            background: #fce8e6;
+            color: #b42318;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .form-error::before {
+            content: "!";
+            display: grid;
+            flex: 0 0 18px;
+            width: 18px;
+            height: 18px;
+            place-items: center;
+            border-radius: 50%;
+            background: #b42318;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .form-error.success {
+            border-color: #a3cfbb;
+            background: #e8f5e9;
+            color: #18794e;
+        }
+
+        .form-error.success::before {
+            content: "✓";
+            background: #18794e;
+        }
+
+        .form-error[hidden] {
+            display: none;
+        }
+
+        .field {
+            display: block;
+            margin-bottom: 16px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            margin-top: 8px;
+            padding: 14px 16px;
+            border: 1px solid #ccd0d5;
+            border-radius: 6px;
+            color: #1c1e21;
+            font: inherit;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #1877f2;
+            box-shadow: 0 0 0 2px rgb(24 119 242 / 18%);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 8px;
+            padding: 13px 16px;
+            border: 0;
+            border-radius: 6px;
+            background: #1877f2;
+            color: #fff;
+            cursor: pointer;
+            font: inherit;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        button:hover {
+            background: #166fe5;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="form-card">
+        <h1>Submit Details</h1>
+        <p class="intro">Enter your information below.</p>
+        <form>
+            <div class="form-error" role="alert" aria-live="polite" id="formError" hidden></div>
+
+            <label class="field" for="name">
+                Name
+                <input id="name" name="name" type="text" autocomplete="name" required>
+            </label>
+
+            <label class="field" for="password">
+                Password
+                <input id="password" name="password" type="password" autocomplete="new-password" required>
+            </label>
+
+            <label class="field" for="age">
+                Age
+                <input id="age" name="age" type="number" min="1" max="120" required>
+            </label>
+
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        const name = document.getElementById('name')
+        const password = document.getElementById('password')
+        const age = document.getElementById('age')
+        const form = document.querySelector('form')
+        const formError = document.getElementById('formError')
+
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault()
+
+            const response = await axios.post('/collection1', {
+                name: name.value,
+                password: password.value,
+                age: age.value
+            })
+
+            formError.classList.toggle('success', response.data.success)
+            formError.textContent = response.data.message
+            formError.hidden = false
+
+            setTimeout(() => {
+                formError.hidden = true
+            }, 2000)
+        })
+
+
+    </script>
+</body>
+
+</html>

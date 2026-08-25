@@ -32,11 +32,21 @@ app.post('/api/users', (req, res) => {
 })
 
 //update user's name or age
+/* steps in ordered:
+
+PUT /users/:id
+1. Which user?
+2. Does user exist?
+3. What fields were provided?
+4. Are they valid?
+5. Update them
+6. Return result
+*/
 app.put('/api/users/:id', (req, res) => {
     const id = Number(req.params.id);
-    const user = users.find(user => user.id === id);
+    const user = users.find(user => user.id === id); //1
 
-    if (!user) {
+    if (!user) {  //2
         return res.status(404).json({
             message: "User not found"
         });
@@ -44,10 +54,12 @@ app.put('/api/users/:id', (req, res) => {
 
     const { name, age } = req.body;
 
+    //3
     if (typeof name === "string" && name.trim() !== "") {
         user.name = name.trim();
     }
 
+    //4
     if (age !== undefined && age !== null && age !== "") {
         const newAge = Number(age);
 
@@ -57,32 +69,42 @@ app.put('/api/users/:id', (req, res) => {
             });
         }
 
+        //5
         user.age = newAge;
     }
 
+    //6
     res.json(user);
 })
 
+
+
+/* 
+Steps in ordered:
+
+DELETE
+/api/users/:id
+1. get req.params.id
+2. find/check
+3. modify data
+4. response
+
+*/
 app.delete('/api/users/:id', (req, res) => {
-    const id = Number(req.params.id);
+    const id = Number(req.params.id); //1
 
-    if (!Number.isInteger(id)) {
-        return res.status(400).json({
-            message: "ID must be a number"
-        });
-    }
+    const idExists = users.some(user => user.id === id); //2
 
-    const idExists = users.some(user => user.id === id);
-
-    if (!idExists) {
+    if (!idExists) { //2
         //return prevents the function from continuing after an error response.
         return res.json({
             message: `The ID '${id}' does not exist`
         });
     }
 
-    users = users.filter(user => user.id !== id);
+    users = users.filter(user => user.id !== id); //3
 
+    //4
     res.json({
         message: "User deleted",
         users
