@@ -44,7 +44,7 @@ app.post('/collection1', async (req, res) => {
 
     const { name, age, password } = req.body;
 
-    // Validation
+    // Name Validation
     if (typeof name !== "string" || name.trim() === "") {
         return res.status(400).json({
             success: false,
@@ -52,33 +52,42 @@ app.post('/collection1', async (req, res) => {
         });
     }
 
-    if (password === undefined) {
-    return res.status(400).json({
-        success: false,
-        message: "Password is required"
-    });
-}
+    // Password Validation
+    if (password === undefined || (typeof password === "string" && password.trim() === "")) {
+        return res.status(400).json({
+            success: false,
+            message: "Password is required"
+        });
+    }
+    // Password Validation
+    if (typeof password !== "string") {
+        return res.status(400).json({
+            success: false,
+            message: "Password must be a string"
+        });
+    }
 
-if (typeof password !== "string") {
-    return res.status(400).json({
-        success: false,
-        message: "Password must be a string"
-    });
-}
-
-if (password.trim() === "") {
-    return res.status(400).json({
-        success: false,
-        message: "Password is required"
-    });
-}
+    // Age Validation
+    if (age === undefined || age === null || (typeof age === "string" && age.trim() === "")) {
+        return res.status(400).json({
+            success: false,
+            message: "Age is required"
+        });
+    }
 
     const newAge = Number(age);
 
-    if (!Number.isInteger(newAge) || newAge < 1 || newAge > 120) {
+    if (!Number.isInteger(newAge)) {
         return res.status(400).json({
             success: false,
-            message: "Age must be a whole number between 1 and 120"
+            message: "Age must be a whole number"
+        });
+    }
+
+    if (newAge < 1 || newAge > 120) {
+        return res.status(400).json({
+            success: false,
+            message: "Age must be between 1 and 120"
         });
     }
 
@@ -115,11 +124,11 @@ if (password.trim() === "") {
 
 
 //get users
-app.get('/collection1', async (req, res)=>{
+app.get('/collection1', async (req, res) => {
 
     const users = await empModel
         .find()
-        .select('name')
+        .select('name age -_id') //only query the name and age, and don't include the others including "id"
 
     res.json(users)
 })
