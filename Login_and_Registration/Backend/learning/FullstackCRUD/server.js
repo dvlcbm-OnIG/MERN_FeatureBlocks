@@ -4,8 +4,7 @@ const path = require('path')
 //create server
 const app = express()
 
-//routes
-const empModel = require('./models/employee')
+const employeeRoutes = require('./routes/employeeRoutes')
 
 
 //middleware
@@ -35,86 +34,8 @@ async function dbConnect() {
 
 dbConnect()
 
-
-
-
-
 //create users  (api endpoint)
-app.post('/collection1', async (req, res) => {
-
-    const { name, age, password } = req.body;
-
-    // Name Validation
-    if (typeof name !== "string" || name.trim() === "") {
-        return res.status(400).json({
-            success: false,
-            message: "Name is required"
-        });
-    }
-
-    // Password Validation
-    if (password === undefined || (typeof password === "string" && password.trim() === "")) {
-        return res.status(400).json({
-            success: false,
-            message: "Password is required"
-        });
-    }
-    // Password Validation
-    if (typeof password !== "string") {
-        return res.status(400).json({
-            success: false,
-            message: "Password must be a string"
-        });
-    }
-
-    // Age Validation
-    if (age === undefined || age === null || (typeof age === "string" && age.trim() === "")) {
-        return res.status(400).json({
-            success: false,
-            message: "Age is required"
-        });
-    }
-
-    const newAge = Number(age);
-
-    if (!Number.isInteger(newAge)) {
-        return res.status(400).json({
-            success: false,
-            message: "Age must be a whole number"
-        });
-    }
-
-    if (newAge < 1 || newAge > 120) {
-        return res.status(400).json({
-            success: false,
-            message: "Age must be between 1 and 120"
-        });
-    }
-
-    // Everything passed validation
-    try {
-
-        const employee = await empModel.create({
-            name: name.trim(),
-            age: newAge,
-            password: password
-        });
-
-        res.status(201).json({
-            success: true,
-            message: "Successfully submitted"
-        });
-
-    } catch (err) {
-
-        console.error(err);
-
-        res.status(500).json({
-            success: false,
-            message: "Internal server error"
-        });
-    }
-});
+app.use('/collection1', employeeRoutes);
 
 
 
@@ -122,6 +43,8 @@ app.post('/collection1', async (req, res) => {
 //get the api end point to let the frontend fetch the data
 
 
+// CRUD handlers are mounted through employeeRoutes.
+/*
 //get users
 app.get('/collection1', async (req, res) => {
 
@@ -148,7 +71,9 @@ app.delete('/collection1/:id', async (req, res) => {
     try {
         const { id } = req.params;
 
-        const deletedUser = await empModel.findByIdAndDelete(id);
+        const deletedUser = await empModel
+            .findByIdAndDelete(id)
+            
 
         if (!deletedUser) {
             return res.status(404).json({
@@ -161,6 +86,7 @@ app.delete('/collection1/:id', async (req, res) => {
             success: true,
             message: "User deleted successfully"
         });
+        console.log('removed', deletedUser)
 
     } catch (err) {
         console.error(err);
@@ -171,3 +97,19 @@ app.delete('/collection1/:id', async (req, res) => {
         });
     }
 });
+
+//
+
+POST /api/employees
+        ↓
+      Route     - is specifically designed for creating modular route handlers, and middleware can pass control to the next step with next().
+        ↓
+   Middleware
+        ↓
+   Controller
+        ↓
+     Model
+        ↓
+    MongoDB
+
+*/

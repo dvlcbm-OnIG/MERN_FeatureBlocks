@@ -1,0 +1,55 @@
+const empModel = require('../models/employee');
+
+async function createEmployee(req, res) {
+	const { name, age, password } = req.body;
+	try {
+		await empModel.create({ name: name.trim(), age: Number(age), password: password });
+		res.status(201).json({ success: true, message: "Successfully submitted" });
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ success: false, message: "Internal server error" });
+	}
+}
+
+async function getAllEmployees(req, res) {
+	try {
+		const users = await empModel.find().select('name age');
+		res.json(users);
+	} catch (err) {
+		res.status(500).json({ success: false, message: "Internal server errors" });
+	}
+}
+
+async function getOneEmployee(req, res) {
+	try {
+		const user = await empModel.findById(req.params.id).select('name age');
+		if (!user) return res.status(404).json({ success: false, message: "User not found" });
+		res.json(user);
+	} catch (err) {
+		res.status(500).json({ success: false, message: "Internal server error" });
+	}
+}
+
+async function updateEmployee(req, res) {
+	try {
+		const user = await empModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+		if (!user) return res.status(404).json({ success: false, message: "User not found" });
+		res.json(user);
+	} catch (err) {
+		res.status(500).json({ success: false, message: "Internal server error" });
+	}
+}
+
+async function deleteEmployee(req, res) {
+	try {
+		const deletedUser = await empModel.findByIdAndDelete(req.params.id);
+		if (!deletedUser) return res.status(404).json({ success: false, message: "User not found" });
+		res.json({ success: true, message: "User deleted successfully" });
+		console.log('removed', deletedUser);
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ success: false, message: "Internal server error" });
+	}
+}
+
+module.exports = { createEmployee, getAllEmployees, getOneEmployee, updateEmployee, deleteEmployee };
