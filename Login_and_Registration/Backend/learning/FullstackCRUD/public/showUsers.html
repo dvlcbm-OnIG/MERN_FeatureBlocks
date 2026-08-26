@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Users</title>
+    <style>
+        :root {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #1c1e21;
+            background: #f0f2f5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            display: grid;
+            min-height: 100vh;
+            margin: 0;
+            place-items: center;
+            padding: 24px;
+        }
+
+        .list-card {
+            width: min(100%, 430px);
+            padding: 28px;
+            border: 1px solid #dddfe2;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            color: #1877f2;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .intro {
+            margin: 0 0 20px;
+            color: #606770;
+            text-align: center;
+        }
+
+        #userList {
+            margin: 0;
+            padding-left: 24px;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="list-card">
+        <h1>Users</h1>
+        <p class="intro">Ordered list of user names.</p>
+
+        <ol id="userList"></ol>
+        <a href="/">Login</a>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // Add your fetch logic here and append only user names as <li> items.
+        // Example target: <ol id="userList"></ol>
+        async function getData(){
+            const userList = document.getElementById('userList')
+
+            const response = await axios.get('/collection1')
+
+            response.data.forEach(user => {
+                userList.innerHTML += `<li>${user.name}</li>`
+            })
+        }
+        getData()
+        
+    </script>
+</body>
+
+</html>

@@ -12,6 +12,10 @@ const empModel = require('./models/employee')
 app.use(express.json())
 app.use(express.static(path.join(__dirname, './public'))) //render frontend
 
+app.get('/showUsers', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'showUsers.html'))
+})
+
 
 //connect to db
 
@@ -107,3 +111,15 @@ if (password.trim() === "") {
 
 
 //get the api end point to let the frontend fetch the data
+
+
+
+//get users
+app.get('/collection1', async (req, res)=>{
+
+    const users = await empModel
+        .find()
+        .select('name')
+
+    res.json(users)
+})
