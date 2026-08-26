@@ -1,11 +1,12 @@
 const express = require('express');
-const {
+const { 
     createEmployee,
     getAllEmployees,
     getOneEmployee,
     updateEmployee,
     deleteEmployee
 } = require('../controllers/employeeController');
+
 const validateEmployee = require('../middleware/employeeValidation');
 
 const router = express.Router();
@@ -15,6 +16,29 @@ router.get('/', getAllEmployees);
 router.get('/:id', getOneEmployee);
 router.put('/:id', updateEmployee);
 router.delete('/:id', deleteEmployee);
+
+module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 router.post('/', async (req, res) => {
@@ -98,4 +122,3 @@ router.post('/', async (req, res) => {
 });
 */
 
-module.exports = router;
