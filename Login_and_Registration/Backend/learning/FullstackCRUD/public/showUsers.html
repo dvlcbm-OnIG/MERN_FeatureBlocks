@@ -61,23 +61,60 @@
         <p class="intro">Ordered list of user names.</p>
 
         <ol id="userList"></ol>
+        <p id="errorFeed" style="color: red; text-align: center;"></p>
         <a href="/">Login</a>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         // Add your fetch logic here and append only user names as <li> items.
         // Example target: <ol id="userList"></ol>
-        async function getData(){
+        async function getData() {
             const userList = document.getElementById('userList')
+            const errorFeed = document.getElementById('errorFeed')
 
-            const response = await axios.get('/collection1')
+            try {
+                const response = await axios.get('/collection1')
 
-            response.data.forEach(user => {
-                userList.innerHTML += `<li>${user.name} - ${user.age}</li>`
-            })
+                //to reset the least after the deletion, to avoid double lists
+                userList.innerHTML = '';
+                response.data.forEach(user => {
+
+                    userList.innerHTML += `
+                    <li>${user.name} - ${user.age}
+
+                        <button onclick="deleteUser('${user._id}')"> Remove </button>
+                    </li>
+                    `
+                    
+                });
+            } catch {
+                errorFeed.innerHTML = "Unable to connect to the server"
+            }
+
         }
+
+        // Delete user  (AI generated code. Recreate later)
+        async function deleteUser(id) {
+
+            const errorFeed = document.getElementById('errorFeed');
+
+            try {
+
+                await axios.delete(`/collection1/${id}`);
+
+                // Refresh the user list
+                getData();
+
+            } catch {
+                //this will trigger when there is a delete api issue after the button is clicked. E.g., incorrect endpoint int the delete method on the server.
+                errorFeed.textContent =
+                    "Unable to delete user";
+
+            }
+        }
+
         getData()
-        
+
     </script>
 </body>
 

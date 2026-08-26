@@ -122,13 +122,52 @@ app.post('/collection1', async (req, res) => {
 //get the api end point to let the frontend fetch the data
 
 
-
 //get users
 app.get('/collection1', async (req, res) => {
 
-    const users = await empModel
+    try{
+        const users = await empModel
         .find()
-        .select('name age -_id') //only query the name and age, and don't include the others including "id"
+        .select('name age') //only query the name and age, and don't include the others including "id"
 
-    res.json(users)
+        res.json(users)
+    }catch(err){
+        res.status(500).json({
+            success: false,
+            message: "Internal server errors"
+        })
+    }
 })
+
+
+
+
+
+//AI genrated. Change later
+app.delete('/collection1/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const deletedUser = await empModel.findByIdAndDelete(id);
+
+        if (!deletedUser) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        res.json({
+            success: true,
+            message: "User deleted successfully"
+        });
+
+    } catch (err) {
+        console.error(err);
+
+        res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+});
