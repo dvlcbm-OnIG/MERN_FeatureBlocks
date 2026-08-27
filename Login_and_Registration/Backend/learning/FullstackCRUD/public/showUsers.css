@@ -1,0 +1,184 @@
+:root {
+    font-family: "DM Sans", sans-serif;
+    color: #27313d;
+    background: #f6f8fa;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    min-height: 100vh;
+    margin: 0;
+    place-items: center;
+    padding: 24px;
+    background: #f6f8fa;
+}
+
+.list-card {
+    width: min(100%, 430px);
+    height: min(400px, calc(100vh - 48px));
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #e3e8ed;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 10px 30px rgb(39 49 61 / 8%);
+    position: relative;
+}
+
+header {
+    flex: 0 0 auto;
+    padding: 24px 28px 18px;
+    border-bottom: 1px solid #e8edf1;
+    background: #fff;
+}
+
+.list-content {
+    min-height: 0;
+    padding: 8px 24px 0;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.card-footer {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 24px 18px;
+    border-top: 1px solid #e8edf1;
+    background: #fff;
+}
+
+#errorFeed {
+    min-height: 20px;
+    margin: 0;
+    color: #b91c1c;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+h1 {
+    margin: 0 0 4px;
+    color: #27313d;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-align: center;
+}
+
+.intro {
+    margin: 0;
+    color: #7a8794;
+    font-size: 14px;
+    text-align: center;
+}
+
+#userList {
+    margin: 0;
+    padding-left: 24px;
+    line-height: 1.5;
+    font-size: 15px;
+}
+
+#userList li {
+    display: list-item;
+    margin-bottom: 5px;
+    padding: 7px 0;
+    border-top: 1px solid #edf0f2;
+    border-bottom: 1px solid #edf0f2;
+    transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+#userList li:hover {
+    border-color: #e2e8f0;
+    background-color: #fafafa;
+}
+
+#userList li .users {
+    display: inline;
+}
+
+#userList li button {
+    float: right;
+    margin-left: 12px;
+    padding: 5px 10px;
+    border: 1px solid #fecaca;
+    border-radius: 5px;
+    background: #fef2f2;
+    color: #b91c1c;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    transition: background-color 150ms ease, border-color 150ms ease,
+        transform 150ms ease;
+}
+
+#userList li button:hover {
+    border-color: #fca5a5;
+    background: #fee2e2;
+}
+
+#userList li button:focus-visible {
+    outline: 3px solid rgb(248 113 113 / 25%);
+    outline-offset: 2px;
+}
+
+#userList li button:active {
+    border-color: #f87171;
+    background: #fecaca;
+    transform: translateY(1px);
+}
+
+.login-link {
+    flex: 0 0 auto;
+    color: #5b6b7a;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 150ms ease;
+}
+
+.login-link:hover {
+    color: #27313d;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.login-link:focus-visible {
+    border-radius: 3px;
+    outline: 3px solid rgb(91 107 122 / 20%);
+    outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 16px;
+    }
+
+    .list-card {
+        height: min(400px, calc(100vh - 32px));
+    }
+
+    header {
+        padding: 22px 20px 16px;
+    }
+
+    .list-content {
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+
+    .card-footer {
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+}
