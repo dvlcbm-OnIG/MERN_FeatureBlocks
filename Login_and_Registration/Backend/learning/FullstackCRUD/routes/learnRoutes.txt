@@ -1,0 +1,92 @@
+ROUTES
+
+1. Purpose
+    Routes determine which controller/middleware should
+    handle an incoming HTTP request.
+
+    Route structure:
+
+        HTTP METHOD
+            ↓
+        PATH
+            ↓
+        MIDDLEWARE
+            ↓
+        CONTROLLER
+
+
+2. HTTP methods
+
+    router.get()
+        Retrieve data
+
+    router.post()
+        Create data
+
+    router.put()
+        Update/replace data
+
+    router.patch()
+        Partially update data
+
+    router.delete()
+        Delete data
+
+
+3. Route parameters
+
+    Example:
+        router.get('/:id', getOneEmployee);
+
+    Access with:
+        req.params.id
+
+
+4. Middleware in routes
+
+    Example:
+        router.post(
+            '/',
+            validateEmployee,
+            createEmployee
+        );
+
+    Multiple middleware can be chained:
+
+        router.post(
+            '/',
+            middleware1,
+            middleware2,
+            middleware3,
+            controller
+        );
+
+
+5. Router
+
+    Create:
+        const router = express.Router();
+
+    Export:
+        module.exports = router;
+
+
+6. Connecting routes to the application
+
+    In server.js:
+
+        app.use('/employees', employeeRoutes);
+
+    This combines:
+
+        /employees
+            +
+        route path
+
+    Example:
+
+        router.get('/:id', getOneEmployee);
+
+        becomes:
+
+        GET /employees/:id

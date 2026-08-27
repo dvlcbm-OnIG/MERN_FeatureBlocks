@@ -39,10 +39,35 @@ app.use('/collection1', employeeRoutes);
 
 
 
+/*
+RESQUEST FLOW
+POST /api/employees
+        ↓
+      Route     - is specifically designed for creating modular route handlers, and middleware can pass control to the next step with next().
+        ↓
+   Middleware
+        ↓
+   Controller
+        ↓
+     Model
+        ↓
+    MongoDB
 
-//get the api end point to let the frontend fetch the data
 
+  BUILDING FLOW (My approach):
 
+    2. models/    create the schema
+        ↓
+    4. middleware/          validate all the request
+        ↓
+    3. controllers/         process the request, request to db, and response to client
+        ↓
+    5. routes/              manages all the api endpoint
+        ↓        
+    1. server.js            connect to db and create a server
+        ↓
+    6. public/              client (frontend)
+*/
 // CRUD handlers are mounted through employeeRoutes.
 /*
 //get users
@@ -100,16 +125,6 @@ app.delete('/collection1/:id', async (req, res) => {
 
 //
 
-POST /api/employees
-        ↓
-      Route     - is specifically designed for creating modular route handlers, and middleware can pass control to the next step with next().
-        ↓
-   Middleware
-        ↓
-   Controller
-        ↓
-     Model
-        ↓
-    MongoDB
+
 
 */

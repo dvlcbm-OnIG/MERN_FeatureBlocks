@@ -1,0 +1,45 @@
+1. Schema fundamentals — essential
+    Field types: String, Number, Boolean, Date, Array, Object
+    Required fields
+    Default values
+    unique
+    select
+    enum
+    Min/max validation
+    String length validation
+    Custom validation
+    
+    E.G., age: {
+             type: Number,
+             required: true,
+             min: 18 
+          }
+
+
+2. Schema options
+    timestamps
+        is particularly useful because Mongoose
+        automatically gives you: "createdAt" & "updatedAt"
+
+    collection naming
+    trict mode
+
+3. Models
+    What a Schema is
+    What a Model is
+    Why you create a Model from a Schema
+    How the Model connects your application to a MongoDB collection 
+
+
+
+4. CRUD Model Methods — essential
+    Done all the CRUD functions
+5. Query operators
+    Done
+6. Query methods
+    Done (except populate)
+
+7. Relationships / References
+8. Schema methods
+9. Schema statics
+10. Middleware/hooks inside Mongoose

@@ -1,0 +1,142 @@
+# MIDDLEWARE
+
+Middleware is a function that runs during the request/response cycle. It can inspect or modify the request/response, stop the request, or pass it to the next handler with `next()`.
+
+## 1. Basic Structure
+
+        ```js
+        function middleware(req, res, next) {
+            // process request
+
+            next();
+        }
+        ```
+
+        * `req` → HTTP request object
+        * `res` → HTTP response object
+        * `next` → passes control to the next middleware/handler
+
+
+
+## 2. Request Validation
+
+    Checks incoming data before reaching the controller.
+
+    Common sources:
+
+        * `req.body`
+        * `req.params`
+        * `req.query`
+
+    Common checks:
+
+        * Required fields
+        * Data types
+        * String length
+        * Number ranges
+        * Valid formats
+        * Allowed values
+
+        ```text
+            Request → Validation → valid → next() → Controller
+                    → invalid → res() → STOP
+        ```
+
+## 3. Authentication
+
+    Checks **who the user is**.
+
+    Example:
+
+        * Verify login/session/token
+        * Attach user information to `req`
+
+
+    Request → Authentication → Controller
+
+
+
+## 4. Authorization
+
+    Checks **what the authenticated user is allowed to do**.
+
+    Example:
+
+        * Admin can delete employees
+        * Regular users cannot
+
+
+    Request → Authentication → Authorization → Controller
+
+
+
+## 5. Logging
+
+    Records information about incoming requests.
+
+    Examples:
+
+        * HTTP method
+        * URL
+        * Time
+        * Response status
+
+    Useful for debugging and monitoring.
+
+
+
+## 6. Error-Handling Middleware
+
+    Handles errors passed through the middleware chain.
+
+
+    function errorHandler(err, req, res, next) {
+    // handle error
+    }
+    
+    Express error middleware uses **4 parameters**:
+    `err, req, res, next`
+
+
+## 7. Middleware Order
+
+    Middleware runs in the order it is registered.
+
+
+    router.post(
+        '/',
+        validateEmployee,
+        authenticate,
+        authorize,
+        createEmployee
+    );
+
+
+    Flow:
+
+        Request
+        ↓
+        validateEmployee
+        ↓
+        authenticate
+        ↓
+        authorize
+        ↓
+        createEmployee
+
+
+
+## 8. Types of Middleware
+
+    **Application-level** → `app.use()`
+    **Router-level** → `router.use()`
+    **Route-level** → placed directly in a route
+    **Error-handling** → `(err, req, res, next)`
+    **Built-in Express** → `express.json()`, `express.static()`
+    **Third-party** → middleware packages
+
+## Core Idea
+
+> Middleware handles processing/checking 
+    that should happen between the incoming 
+    request and the final controller.

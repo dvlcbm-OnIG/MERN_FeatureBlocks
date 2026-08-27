@@ -1,0 +1,46 @@
+#project directories or application layers/modules,
+
+    FullstackCRUD/
+    │
+    ├── server.js
+    │
+    ├── config/
+    ├── models/
+    ├── middleware/
+    ├── controllers/
+    ├── routes/
+    ├── services/
+    ├── utils/
+    └── public/
+
+    models/
+        Database/data layer
+        → schemas, models, database-related definitions
+
+    middleware/
+        Request-processing layer
+        → validation, authentication, logging, etc.
+
+    controllers/
+        Request-handling layer
+        → receives request and produces response
+
+    routes/
+        Routing layer
+        → connects HTTP endpoints to middleware/controllers
+
+    services/
+        Business-logic layer
+        → application rules and operations
+
+    config/
+        Configuration
+        → database configuration, environment variables, app settings
+
+    utils/
+        Utility/helper code
+        → reusable functions that don't belong to a specific layer
+
+    public/
+        Frontend/static files
+        → HTML, CSS, JavaScript, images
