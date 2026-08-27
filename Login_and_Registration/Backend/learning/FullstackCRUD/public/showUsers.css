@@ -45,6 +45,26 @@ header {
     overflow-y: auto;
 }
 
+.list-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.list-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.list-content::-webkit-scrollbar-thumb {
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: #cbd5df;
+    background-clip: padding-box;
+}
+
+.list-content::-webkit-scrollbar-thumb:hover {
+    background: #aebdca;
+    background-clip: padding-box;
+}
+
 .card-footer {
     flex: 0 0 auto;
     display: flex;
