@@ -37,6 +37,10 @@ function validateEmployee(req, res, next) {
 		return res.status(400).json({ success: false, message: "Age must be between 1 and 120" });
 	}
 
+	// Normalize the data
+    // req.body.name = name.trim();
+    // req.body.age = newAge;
+	
 	// Continue to the next middleware when all employee data is valid.
 	next();
 }
