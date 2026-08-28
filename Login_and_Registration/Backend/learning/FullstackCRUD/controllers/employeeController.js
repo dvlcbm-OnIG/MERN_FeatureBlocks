@@ -69,8 +69,9 @@ async function getOneEmployee(req, res) {
 async function updateEmployee(req, res) {
 	try {
 		const user = await empModel.findByIdAndUpdate(
-			req.params.id, req.body,
-			{ new: true, runValidators: true }
+			req.params.id, //filter
+			req.body,	//update
+			{ new: true, runValidators: true }// runvalidators - “Before saving the update, validate the new values against the schema rules.”
 		);
 
 		if (!user){

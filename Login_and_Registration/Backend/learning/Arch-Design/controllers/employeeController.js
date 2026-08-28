@@ -20,7 +20,7 @@ async function createEmployee(req, res){
         res.status(201).json([
             {
             success: true,
-            message: "Successfully submitted",
+            message: "Successfully created",
             createdAt: employee.createdAt
             },
             {
@@ -38,9 +38,9 @@ async function createEmployee(req, res){
             })
         }
         //500 - If it's an unexpected server/database error
-        res.status(500).json({
+        return res.status(400).json({
             success: false,
-            message: "Failed to create an employee"
+            message: err.message
         })
     }
 }
@@ -49,7 +49,7 @@ async function getAllEmployees(req, res){
     try{
         const employees = await empMod.find();
         res.status(200).json(employees)
-    }catch(err){
+    }catch{
         res.status(500).json({
             success: false,
             message: "Failed to fetch employees"
@@ -57,16 +57,44 @@ async function getAllEmployees(req, res){
     }
 }
 async function getOneEmployee(req, res){
-
-
+    try{
+        const employee = await empMod
+            .findById(req.params.id)
+        res.status(200).json(employee)
+    }catch{
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch employee"
+        })
+    }
 }
 async function updateEmployee(req, res){
-
-
+    try{
+        const employee = await empMod.findByIdAndUpdate(
+            req.params.id,  //filter
+            req.body,       //update
+            {
+               // new: true,    //“return the updated document,”
+                returnDocument: "after",   //and Mongoose is telling you that in newer versions, this is deprecated in favor of  returnDocument
+                runValidators: true //runValidators - “Before saving the update, validate the new values against the schema rules.”
+            } 
+        )
+        res.status(200).json({
+            success: true,
+            message: "Successfully updated",
+            updatedAt: new Date(employee.updatedAt).toLocaleString(),
+            employee: req.body
+        })
+    }catch{
+        res.status(500).json({
+            success: false,
+            message: "Failed to update employee"
+        })
+    }
 }
 async function deleteEmployee(req, res){
 
 
 }
 
-module.exports = { createEmployee, getAllEmployees}
+module.exports = { createEmployee, getAllEmployees, getOneEmployee, updateEmployee}
