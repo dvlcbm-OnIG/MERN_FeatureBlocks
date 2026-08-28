@@ -1,5 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
+
+const empMod = require('./models/employee')
 //create server
 const app = express()
 
@@ -18,6 +20,7 @@ async function dbConnect() {
         await mongoose.connect('mongodb://127.0.0.1:27017/software')
 
         console.log("successfully connected to db!");
+
         app.listen(3000, () => {
             console.log("server is now running...")
         })

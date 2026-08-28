@@ -19,7 +19,7 @@ function validateEmployee(req, res, next){
         })
     }
     //Does it have a valid email format?
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.(com|net|org|edu)$/i;; 
 
     if(!emailRegex.test(email.trim())){
         return res.status(400).json({
@@ -88,7 +88,7 @@ function validateEmployee(req, res, next){
 
     //normalize
     req.body.name = name.trim();
-    req.body.email = email.trim();
+    req.body.email = email.trim().toLowerCase();
     req.body.department = department.trim()
     req.body.age = newAge
 
