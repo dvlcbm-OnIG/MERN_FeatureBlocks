@@ -5,7 +5,8 @@ const {
     createEmployee,
     getAllEmployees,
     getOneEmployee,
-    updateEmployee
+    updateEmployee,
+    deleteEmployee
 } = require('../controllers/employeeController');
 
 const validateEmployee = require('../middleware/employeeValidation');
@@ -17,5 +18,6 @@ router.post('/', validateEmployee, createEmployee);
 router.get('/', getAllEmployees);
 router.get('/:id', getOneEmployee);
 router.put('/:id', updateEmployee);
+router.delete('/:id', deleteEmployee);
 
 module.exports = router

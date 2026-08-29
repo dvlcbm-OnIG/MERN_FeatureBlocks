@@ -48,6 +48,7 @@ async function getAllEmployees(req, res){
 
     try{
         const employees = await empMod.find();
+        //200 - OK
         res.status(200).json(employees)
     }catch{
         res.status(500).json({
@@ -60,6 +61,13 @@ async function getOneEmployee(req, res){
     try{
         const employee = await empMod
             .findById(req.params.id)
+            
+        if(!employee){
+            return res.status(404).json({
+                success: false,
+                message: "Employee doesn't exist"
+            })
+        }
         res.status(200).json(employee)
     }catch{
         res.status(500).json({
@@ -88,13 +96,32 @@ async function updateEmployee(req, res){
     }catch{
         res.status(500).json({
             success: false,
-            message: "Failed to update employee"
+            message: "Internal server error"
         })
     }
 }
 async function deleteEmployee(req, res){
+    try{
+        const employee = await empMod.findByIdAndDelete(
+            req.params.id
+        )
 
-
+        if(!employee){
+            return res.status(404).json({
+                success: false,
+                message: "Employee doesn't exist"
+            })
+        }
+        res.status(200).json({
+            success: true,
+            message: "Employee successfully deleted"
+        })
+    }catch{
+        res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        })
+    }
 }
 
-module.exports = { createEmployee, getAllEmployees, getOneEmployee, updateEmployee}
+module.exports = { createEmployee, getAllEmployees, getOneEmployee, updateEmployee, deleteEmployee}
