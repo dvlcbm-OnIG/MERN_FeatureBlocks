@@ -29,12 +29,13 @@
                 formMessage.textContent = responseData?.message || 'Employee created successfully';
                 formMessage.style.display = 'block';
                 
-                // Reset form
-                employeeForm.reset();
+                
                 
                 // Hide message after 3 seconds
                 setTimeout(() => {
                     formMessage.style.display = 'none';
+                    // Reset form
+                    employeeForm.reset();
                 }, 3000);
                 
             } catch (error) {
