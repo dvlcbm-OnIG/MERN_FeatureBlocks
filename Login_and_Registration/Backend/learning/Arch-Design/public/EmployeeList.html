@@ -270,11 +270,12 @@
                         <td class="employee-createdAt">${new Date(Data.createdAt).toLocaleString()}</td>
                         <td class="employee-updatedAt">${new Date(Data.updatedAt).toLocaleString()}</td>
                         <td class="actions">
-                            <button class="btn btn-edit" onclick="editEmployee(this)">Edit</button>
+                            <button class="btn btn-edit" onclick="editEmployee(${Data._id})">Edit</button>
                             <button class="btn btn-delete" onclick="deleteEmployee(this)">Delete</button>
                         </td>
                     </tr>
                 `
+                console.log(Data._id)
             })
         };
         getAllEmployees();
@@ -282,12 +283,20 @@
 
 
         // Placeholder functions for edit and delete
-        function editEmployee(btn) {
-            console.log('Edit button clicked');
+        function editEmployee() {
+            
         }
         
-        function deleteEmployee(btn) {
-            console.log('Delete button clicked');
+        async function deleteEmployee(button) {
+            try{
+                const row = button.closest('tr');
+                const userId = row.getAttribute('data-employee-id');
+                const response = await axios.delete(`/SWE/${userId}`)
+                console.log(response)
+                row.remove();
+            }catch(err){
+                console.log(err.message)
+            }
         }
         
         // Initialize - Log to confirm all elements are loaded
