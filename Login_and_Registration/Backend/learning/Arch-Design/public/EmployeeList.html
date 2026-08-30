@@ -13,6 +13,14 @@
             <input type="text" id="search" placeholder="Search employees...">
         </div>
 
+        <div id="deleteModal" class="delete-modal hidden" aria-hidden="true">
+            <div class="delete-modal-message">Delete this employee?</div>
+            <div class="delete-modal-actions">
+                <button id="cancelDeleteBtn" class="modal-btn modal-btn-cancel">No</button>
+                <button id="confirmDeleteBtn" class="modal-btn modal-btn-confirm">Yes</button>
+            </div>
+        </div>
+
         <div class="nav-header">
             <a href="/" class="back-home-link">← Back to Home</a>
             <h1>Employee List</h1>

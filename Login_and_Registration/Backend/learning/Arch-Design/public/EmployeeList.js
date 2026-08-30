@@ -3,6 +3,8 @@
         const search = document.getElementById('search');
 
         let allEmployees = [];
+        let pendingDeleteId = null;
+        let pendingDeleteButton = null;
 
         function renderEmployees(employees) {
             employeeTableBody.innerHTML = employees.map((employee) => `
@@ -16,8 +18,8 @@
                     <td class="employee-createdAt">${new Date(employee.createdAt).toLocaleString()}</td>
                     <td class="employee-updatedAt">${new Date(employee.updatedAt).toLocaleString()}</td>
                     <td class="actions">
-                        <button class="btn btn-edit" onclick="editEmployee('${employee._id}')">Edit</button>
-                        <button class="btn btn-delete" onclick="deleteEmployee(this)">Delete</button>
+                       <!-- <button class="btn btn-edit" onclick="editEmployee('${employee._id}')">Edit</button>-->
+                        <button class="btn btn-delete" onclick="showDeleteModal(this)">Delete</button>
                     </td>
                 </tr>
             `).join('');
@@ -68,17 +70,45 @@
         function editEmployee() {
         }
 
-        async function deleteEmployee(button) {
+        function showDeleteModal(button) {
+            const row = button.closest('tr');
+            pendingDeleteId = row.getAttribute('data-employee-id');
+            pendingDeleteButton = button;
+
+            const modal = document.getElementById('deleteModal');
+            const rect = button.getBoundingClientRect();
+
+            modal.style.left = `${rect.left + rect.width / 2}px`;
+            modal.style.top = `${rect.top - 12}px`;
+            modal.classList.remove('hidden');
+            modal.setAttribute('aria-hidden', 'false');
+        }
+
+        function hideDeleteModal() {
+            const modal = document.getElementById('deleteModal');
+            modal.classList.add('hidden');
+            modal.setAttribute('aria-hidden', 'true');
+            pendingDeleteId = null;
+            pendingDeleteButton = null;
+        }
+
+        document.getElementById('cancelDeleteBtn').addEventListener('click', hideDeleteModal);
+
+        document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+            if (!pendingDeleteId || !pendingDeleteButton) return;
+
             try {
-                const row = button.closest('tr');
-                const userId = row.getAttribute('data-employee-id');
-                const response = await axios.delete(`/SWE/${userId}`);
+                const row = pendingDeleteButton.closest('tr');
+                const response = await axios.delete(`/SWE/${pendingDeleteId}`);
                 console.log(response);
+
                 row.remove();
-                allEmployees = allEmployees.filter((employee) => employee._id !== userId);
+                allEmployees = allEmployees.filter((employee) => employee._id !== pendingDeleteId);
+                hideDeleteModal();
             } catch (err) {
                 console.log(err.message);
+                hideDeleteModal();
             }
-        }
+        });
 
         console.log('All elements loaded successfully');
