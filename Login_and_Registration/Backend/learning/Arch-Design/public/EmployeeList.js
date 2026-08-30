@@ -92,6 +92,16 @@
             pendingDeleteButton = null;
         }
 
+        document.addEventListener('click', (event) => {
+            const modal = document.getElementById('deleteModal');
+            const isInsideModal = modal.contains(event.target);
+            const isDeleteButton = event.target.closest('.btn-delete');
+
+            if (!isInsideModal && !isDeleteButton && !modal.classList.contains('hidden')) {
+                hideDeleteModal();
+            }
+        });
+
         document.getElementById('cancelDeleteBtn').addEventListener('click', hideDeleteModal);
 
         document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
