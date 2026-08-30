@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .table-wrapper {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+
+        th {
+            padding: 16px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        th:first-child {
+            text-align: left;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #ecf0f1;
+            transition: background-color 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        td {
+            padding: 16px;
+            font-size: 14px;
+            color: #34495e;
+            text-align: center;
+        }
+
+        .employee-row {
+            cursor: pointer;
+        }
+
+        .employee-id {
+            display: none;
+        }
+
+        .employee-name {
+            text-align: left;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .employee-email {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .employee-age {
+            text-align: center;
+        }
+
+        .employee-department {
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #0984e3;
+        }
+
+        .employee-salary {
+            text-align: center;
+            font-weight: 500;
+            color: #27ae60;
+        }
+
+        .employee-createdAt,
+        .employee-updatedAt {
+            font-size: 13px;
+            color: #7f8c8d;
+            text-align: center;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-edit {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #2980b9;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c0392b;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .back-home-link {
+            display: inline-block;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 6px;
+        }
+
+        .back-home-link:hover {
+            color: #2980b9;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-header">
+            <a href="/" class="back-home-link">← Back to Home</a>
+            <h1>Employee List</h1>
+            <div></div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Age</th>
+                        <th>Department</th>
+                        <th>Salary</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTableBody">
+                    <!-- Sample Row 1 -->
+                    <!-- <tr class="employee-row" data-employee-id="67a1b2c3d4e5f6g7h8i9j0k1">
+                        <td class="employee-id">67a1b2c3d4e5f6g7h8i9j0k1</td>
+                        <td class="employee-name">John Doe</td>
+                        <td class="employee-age">28</td>
+                        <td class="employee-department">Engineering</td>
+                        <td class="employee-salary">$85,000</td>
+                        <td class="employee-createdAt">12/15/2023, 10:30 AM</td>
+                        <td class="employee-updatedAt">08/20/2024, 2:15 PM</td>
+                        <td class="actions">
+                            <button class="btn btn-edit" onclick="editEmployee(this)">Edit</button>
+                            <button class="btn btn-delete" onclick="deleteEmployee(this)">Delete</button>
+                        </td>
+                    </tr> -->
+
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Allow to use AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // Define all DOM elements
+       // const container = document.querySelector('.container');
+        //const tableWrapper = document.querySelector('.table-wrapper');
+       // const employeeTable = document.querySelector('table');
+        const employeeTableBody = document.getElementById('employeeTableBody');
+        
+        // Employee row elements (for reference when working with rows)
+      //  const employeeRows = document.querySelectorAll('.employee-row');
+        const employeeNames = document.querySelectorAll('.employee-name');
+        const employeeAges = document.querySelectorAll('.employee-age');
+        const employeeDepartments = document.querySelectorAll('.employee-department');
+        const employeeSalaries = document.querySelectorAll('.employee-salary');
+        const employeeCreatedAts = document.querySelectorAll('.employee-createdAt');
+        const employeeUpdatedAts = document.querySelectorAll('.employee-updatedAt');
+        
+
+
+        //fetch
+        async function getAllEmployees(){
+            const response = await axios.get('/SWE');
+
+            console.log(JSON.stringify(response.data, null, 2))
+
+            response.data.forEach(Data =>{
+                employeeTableBody.innerHTML += 
+                `
+                    <tr class="employee-row" data-employee-id="${Data._id}">
+                        <td class="employee-id">${Data._id}</td>
+                        <td class="employee-name">${Data.name}</td>
+                        <td class="employee-email">${Data.email}</td>
+                        <td class="employee-age">${Data.age}</td>
+                        <td class="employee-department">${Data.department}</td>
+                        <td class="employee-salary">$${Data.salary}</td>
+                        <td class="employee-createdAt">${new Date(Data.createdAt).toLocaleString()}</td>
+                        <td class="employee-updatedAt">${new Date(Data.updatedAt).toLocaleString()}</td>
+                        <td class="actions">
+                            <button class="btn btn-edit" onclick="editEmployee(this)">Edit</button>
+                            <button class="btn btn-delete" onclick="deleteEmployee(this)">Delete</button>
+                        </td>
+                    </tr>
+                `
+            })
+        };
+        getAllEmployees();
+
+
+
+        // Placeholder functions for edit and delete
+        function editEmployee(btn) {
+            console.log('Edit button clicked');
+        }
+        
+        function deleteEmployee(btn) {
+            console.log('Delete button clicked');
+        }
+        
+        // Initialize - Log to confirm all elements are loaded
+        console.log('All elements loaded successfully');
+    </script>
+</body>
+</html>

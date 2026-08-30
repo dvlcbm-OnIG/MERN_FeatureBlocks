@@ -17,16 +17,12 @@ async function createEmployee(req, res){
             //no need to add createdAt & updatedAt, timestamps handles it.
         })
         //201 - success create
-        res.status(201).json([
-            {
+        res.status(201).json({
             success: true,
             message: "Successfully created",
-            createdAt: employee.createdAt
-            },
-            {
-             employee: req.body
-            }
-        ])
+            createdAt: employee.createdAt,
+            employee: employee
+        })
 
     }catch(err){
         // MongoDB duplicate key error (e.g., duplicate email)
@@ -85,8 +81,14 @@ async function updateEmployee(req, res){
                // new: true,    //“return the updated document,”
                 returnDocument: "after",   //and Mongoose is telling you that in newer versions, this is deprecated in favor of  returnDocument
                 runValidators: true //runValidators - “Before saving the update, validate the new values against the schema rules.”
-            } 
+            }
         )
+        if(!employee){
+             return res.status(404).json({
+                success: false,
+                message: "Employee not found"
+             })   
+            }
         res.status(200).json({
             success: true,
             message: "Successfully updated",

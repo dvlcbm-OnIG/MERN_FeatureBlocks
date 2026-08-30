@@ -1,4 +1,4 @@
-function validateEmployee(req, res, next){
+function validateCreateEmployee(req, res, next){
     const {name, email, password, age, department, salary} = req.body;
 
     //name validation - !string, ""/empty/whitespaces
@@ -96,7 +96,11 @@ function validateEmployee(req, res, next){
     next()
 };
 
-module.exports = validateEmployee
+function validateUpdateEmployee(req, res, next){
+    
+}
+
+module.exports = validateCreateEmployee
 
 
 

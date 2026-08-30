@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const path = require('path')
 
 const empMod = require('./models/employee')
 //create server
@@ -11,6 +12,7 @@ const employeeRoutes = require('./routes/employeeRoute')
 //middleware
 app.use(express.json())
 
+app.use(express.static(path.join(__dirname, "./public")))
 
 //connect to db
 
@@ -33,4 +35,9 @@ dbConnect()
 
 //create users  (api endpoint)
 app.use('/SWE', employeeRoutes);
+
+// Serve EmployeeList.html when accessing /EmployeeList
+app.get('/EmployeeList', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/EmployeeList.html'))
+})
 

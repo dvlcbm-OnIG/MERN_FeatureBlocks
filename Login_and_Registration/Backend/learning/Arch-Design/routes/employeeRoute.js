@@ -9,12 +9,12 @@ const {
     deleteEmployee
 } = require('../controllers/employeeController');
 
-const validateEmployee = require('../middleware/employeeValidation');
+const validateCreateEmployee = require('../middleware/employeeValidation');
 
 const router = express.Router();
 
 
-router.post('/', validateEmployee, createEmployee);
+router.post('/', validateCreateEmployee, createEmployee);
 router.get('/', getAllEmployees);
 router.get('/:id', getOneEmployee);
 router.put('/:id', updateEmployee);
