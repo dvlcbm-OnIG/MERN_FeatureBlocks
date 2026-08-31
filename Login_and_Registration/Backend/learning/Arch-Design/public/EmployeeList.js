@@ -6,7 +6,16 @@
         let pendingDeleteId = null;
         let pendingDeleteButton = null;
 
-        function renderEmployees(employees) {
+        function renderEmployees(employees, emptyMessage = 'No employee listed') {
+            if (!employees || employees.length === 0) {
+                employeeTableBody.innerHTML = `
+                    <tr class="employee-row empty-row">
+                        <td colspan="8">${emptyMessage}</td>
+                    </tr>
+                `;
+                return;
+            }
+
             employeeTableBody.innerHTML = employees.map((employee) => `
                 <tr class="employee-row" data-employee-id="${employee._id}">
                     <td class="employee-id">${employee._id}</td>
@@ -26,6 +35,8 @@
         }
 
         async function getAllEmployees() {
+            renderEmployees([], 'No employee listed');
+
             try {
                 const response = await axios.get('/SWE');
                 allEmployees = response.data;
@@ -56,13 +67,15 @@
                     const searchableText = [
                         employee.name,
                         employee.email,
-                        employee.department
+                        employee.department,
+                        employee.age,
+                        employee.salary
                     ].join(' ').toLowerCase();
 
                     return searchableText.includes(query);
                 });
 
-                renderEmployees(filteredEmployees);
+                renderEmployees(filteredEmployees, 'No employees match your search');
                 console.log(filteredEmployees);
             }, 1000);
         });
