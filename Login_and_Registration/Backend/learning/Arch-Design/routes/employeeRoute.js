@@ -9,7 +9,10 @@ const {
     deleteEmployee
 } = require('../controllers/employeeController');
 
-const validateCreateEmployee = require('../middleware/employeeValidation');
+const {
+    validateCreateEmployee,
+    validateUpdateEmployee
+} = require('../middleware/employeeValidation');
 
 const router = express.Router();
 
@@ -17,7 +20,7 @@ const router = express.Router();
 router.post('/', validateCreateEmployee, createEmployee);
 router.get('/', getAllEmployees);
 router.get('/:id', getOneEmployee);
-router.put('/:id', updateEmployee);
+router.put('/:id', validateUpdateEmployee, updateEmployee);
 router.delete('/:id', deleteEmployee);
 
 module.exports = router
