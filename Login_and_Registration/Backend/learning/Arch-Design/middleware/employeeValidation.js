@@ -5,7 +5,7 @@ function validateCreateEmployee(req, res, next){
     if(typeof name !== "string" || name.trim() === ""){
         //400 - bad request
         return res.status(400).json({
-            succes: false,
+            success: false,
             message: "Name is required"
         })
     }
